@@ -1,4 +1,4 @@
-package utils.slack;
+package support.utils.slack;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import org.springframework.web.util.UriUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import utils.slack.builder.SlackMessageBuilder;
+import support.utils.slack.builder.SlackMessageBuilder;
 
 public class SlackUtil {
 

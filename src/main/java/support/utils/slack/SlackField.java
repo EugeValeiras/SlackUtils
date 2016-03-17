@@ -1,4 +1,4 @@
-package utils.slack;
+package support.utils.slack;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

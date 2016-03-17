@@ -1,7 +1,7 @@
-package utils.slack.builder;
+package support.utils.slack.builder;
 
-import utils.slack.SlackAttachment;
-import utils.slack.SlackField;
+import support.utils.slack.SlackAttachment;
+import support.utils.slack.SlackField;
 
 public class SlackAttachmentBuilder {
 

@@ -1,4 +1,4 @@
-package utils.slack;
+package support.utils.slack;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package utils.slack.builder;
+package support.utils.slack.builder;
 
-import utils.slack.SlackField;
+import support.utils.slack.SlackField;
 
 public class SlackFieldBuilder {
 
