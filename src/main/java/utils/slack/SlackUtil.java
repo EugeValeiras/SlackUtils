@@ -19,9 +19,9 @@ import utils.slack.builder.SlackMessageBuilder;
 
 public class SlackUtil {
 
-	private static final String token =  "xoxp-2598773363-6987940228-21463692417-b6025bd177";
-	private static final ObjectMapper mapper = new ObjectMapper();
-	
+	protected static final String token =  "INVALID TOKEN";
+	protected static final ObjectMapper mapper = new ObjectMapper();
+	 
 	public static Boolean sendMessageIfOnline(SlackMessageObject message) throws Exception {
 		if(isEmployeeOnline(message.getChannel())){
 			return sendMessage(message);
