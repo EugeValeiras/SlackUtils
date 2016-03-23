@@ -19,22 +19,26 @@ import support.utils.slack.builder.SlackMessageBuilder;
 
 public class SlackUtil {
 
-	protected static final String token =  "INVALID TOKEN";
-	protected static final ObjectMapper mapper = new ObjectMapper();
+	protected String token =  "INVALID TOKEN";
+	public ObjectMapper mapper = new ObjectMapper();
 	 
-	public static Boolean sendMessageIfOnline(SlackMessageObject message) throws Exception {
+	public SlackUtil(String token) {
+		this.token = token;
+	}
+	
+	public Boolean sendMessageIfOnline(SlackMessageObject message) throws Exception {
 		if(isEmployeeOnline(message.getChannel())){
 			return sendMessage(message);
 		}
 		return false;
 	}
 
-	public static Boolean isEmployeeOnline(String employeeID) throws Exception{
+	public Boolean isEmployeeOnline(String employeeID) throws Exception{
 		
 		String presenceUrl =  "https://slack.com/api/users.getPresence";
 		
 		String presenceParameters = "?"
-				+ "token=xoxp-2598773363-6987940228-21463692417-b6025bd177"
+				+ "token="+token
 				+ "&user=" + UriUtils.encodeQueryParam(employeeID, "UTF-8")
 				+ "&pretty=1";
 		
@@ -51,7 +55,7 @@ public class SlackUtil {
 		return presenceResponse.isOnline() != null ? presenceResponse.isOnline() : false;
 	}
 	
-	public static boolean sendMessage(SlackMessageObject message) throws IOException {
+	public boolean sendMessage(SlackMessageObject message) throws IOException {
 		
 		JSONArray attachments = new JSONArray();
 		for(SlackAttachment attach : message.getAttachments()){
@@ -76,7 +80,7 @@ public class SlackUtil {
 				"https://slack.com/api/chat.postMessage";
 		
 		String chatMessageParameters = "?"
-						+ "token=xoxp-2598773363-6987940228-21463692417-b6025bd177"
+						+ "token="+token
 						+ "&channel=" + UriUtils.encodeQueryParam(message.getChannel(), "UTF-8")
 						+ "&text=" + UriUtils.encodeQueryParam(message.getText(), "UTF-8")
 						+ "&username=" + UriUtils.encodeQueryParam(message.getUsername(), "UTF-8")
@@ -94,7 +98,7 @@ public class SlackUtil {
 		return response.getStatusLine().getStatusCode() == 200;
 	}
 	
-	public static Boolean createNewChannel(String channelName) throws ClientProtocolException, IOException{
+	public Boolean createNewChannel(String channelName) throws ClientProtocolException, IOException{
 		String urlString = "https://slack.com/api/channels.create?token="+token+"&name="+channelName+"&pretty=1";
 		String encodeUri = UriUtils.encodeQuery(urlString, "UTF-8");
 		
@@ -114,7 +118,7 @@ public class SlackUtil {
 		
 	}
 	
-	public static Boolean archiveChannel(String channelName) throws ClientProtocolException, IOException{
+	public Boolean archiveChannel(String channelName) throws ClientProtocolException, IOException{
 		String urlString = "https://slack.com/api/channels.archive?token="+token+"&name="+channelName;
 		String encodeUri = UriUtils.encodeQuery(urlString, "UTF-8");
 		
@@ -134,7 +138,7 @@ public class SlackUtil {
 		
 	}
 	
-	private static void notifyIfNotSuccess(HttpResponse response){
+	private void notifyIfNotSuccess(HttpResponse response){
 		if(response.getStatusLine().getStatusCode() != 200){
 			System.out.println("Data: \n"+"{}");
 			
@@ -143,7 +147,7 @@ public class SlackUtil {
 		}
 	}
 
-	private static <T> T map(ObjectMapper mapper, HttpResponse response,  Class<T> entity) throws Exception {
+	private <T> T map(ObjectMapper mapper, HttpResponse response,  Class<T> entity) throws Exception {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 		return mapper.readValue(response.getEntity().getContent(), entity);
 	}
